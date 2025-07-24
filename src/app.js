@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const ErrorHandler = require('./middlwares/ErrorHandler');
 
 const app = express();
 
@@ -9,7 +10,10 @@ const corsOption = {
 };
 
 app.use(cors(corsOption));
-app.use(express.json);
+app.use(express.json());
+
+// Middleware
+app.use(ErrorHandler);
 
 // Health Check
 app.get('/', (req, res) => {
