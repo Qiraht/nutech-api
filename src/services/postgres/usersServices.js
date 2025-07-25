@@ -1,6 +1,7 @@
 const { nanoid } = require('nanoid');
 const bcrypt = require('bcrypt');
 const InvariantError = require('../../exceptions/InvariantError');
+const AuthenticationError = require('../../exceptions/AuthenticationError');
 
 class UsersServices {
   constructor({ pool }) {
@@ -45,6 +46,27 @@ class UsersServices {
 
     if (result.rowCount > 0) {
       throw new InvariantError('Email sudah terdaftar');
+    }
+  }
+
+  async verifyUserCredential(email, password) {
+    const query = {
+      text: 'SELECT email, password FROM users WHERE email = $1',
+      values: [email],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rowCount) {
+      throw new AuthenticationError('Username atau password salah');
+    }
+
+    const { password: hashedPassword } = result.rows[0];
+
+    const match = await bcrypt.compare(password, hashedPassword);
+
+    if (!match) {
+      throw new AuthenticationError('Username atau password salah');
     }
   }
 }
