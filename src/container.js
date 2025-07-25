@@ -1,0 +1,23 @@
+const { createContainer, asClass, asValue } = require('awilix');
+const UsersServices = require('./services/postgres/usersServices');
+const UsersController = require('./controllers/usersController');
+const { Pool } = require('pg');
+const config = require('./config');
+
+const container = createContainer();
+
+const pool = new Pool(config.psql);
+
+// Registering Container
+container.register({
+  // Postgres pool
+  pool: asValue(pool),
+
+  // Services
+  userService: asClass(UsersServices).singleton(),
+
+  // Controller
+  userController: asClass(UsersController),
+});
+
+module.exports = container;
