@@ -25,6 +25,18 @@ class UsersController {
       data: null,
     });
   }
+
+  async postLoginController(req, res) {
+    const { email, password } = req.body;
+
+    await this._service.verifyUserCredential(email, password);
+
+    res.status(200).json({
+      status: 0,
+      message: 'Login Sukses',
+      data: null,
+    })
+  }
 }
 
 module.exports = UsersController;
