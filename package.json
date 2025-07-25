@@ -8,7 +8,7 @@
     "start:dev": "nodemon src/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint */**.js --fix",
-    "format": "prettier --write */**.js",
+    "format": "prettier --write */**/**.js",
     "migrate": "node-pg-migrate"
   },
   "keywords": [],
