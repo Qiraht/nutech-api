@@ -1,5 +1,6 @@
 const { nanoid } = require('nanoid');
 const bcrypt = require('bcrypt');
+const InvariantError = require('../../exceptions/InvariantError');
 
 class UsersServices {
   constructor({ pool }) {
@@ -33,6 +34,19 @@ class UsersServices {
   async updateProfile() {}
 
   async updateProfileImage() {}
+
+  async verifyNewEmail(email) {
+    const query = {
+      text: 'SELECT email FROM users WHERE email = $1',
+      values: [email],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (result.rowCount > 0) {
+      throw new InvariantError('Email sudah terdaftar');
+    }
+  }
 }
 
 module.exports = UsersServices;

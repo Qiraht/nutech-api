@@ -10,6 +10,8 @@ class UsersController {
   async postRegistrationController(req, res) {
     const { email, first_name, last_name, password } = req.body;
 
+    await this._service.verifyNewEmail(email);
+
     await this._service.registerUser({
       email,
       first_name,
