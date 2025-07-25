@@ -1,7 +1,7 @@
 const express = require('express');
 const container = require('../container');
 const validateRequestBody = require('../middlwares/ValidateRequestBody');
-const RegisterPayloadSchema = require('../validator/usersSchema');
+const { RegisterPayloadSchema, LoginPayloadSchema } = require('../validator/usersSchema');
 
 const router = express.Router();
 
@@ -15,9 +15,11 @@ router.post(
 );
 
 // post /login
-router.post('/login', async (req, res) => {
-  res.json({ message: 'Still In Progress!' });
-});
+router.post(
+  '/login',
+  validateRequestBody(LoginPayloadSchema),
+  userController.postLoginController,
+);
 
 // get /Profile
 router.get('/profile', async (req, res) => {
