@@ -35,6 +35,22 @@ class TransactionsServices {
     */
     async createTransaction({userId, transactionCode}) {
     }
+
+    async subtractUserBalance(email, amount) {
+        const query = {
+          text: `UPDATE users
+            SET balance = balance - $1
+            WHERE email = $2
+            RETURNING balance`,
+          value: [amount, email],
+        };
+
+        const result = await this._pool.query(query);
+
+        return result.rows[0];
+    }
+
+    async getTransactionsByUserId(userId, limit, offset) {}
 }
 
 module.exports = TransactionsServices;
