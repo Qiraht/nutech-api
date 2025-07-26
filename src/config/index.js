@@ -12,6 +12,10 @@ const config = {
     password: process.env.PGPASSWORD,
     database: process.env.PGDATABASE,
   },
+  token: {
+    secretToken: process.env.JWT_SECRET,
+    tokenAge: process.env.JWT_EXPIRY,
+  },
 };
 
 module.exports = config;
