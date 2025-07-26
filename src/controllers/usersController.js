@@ -1,8 +1,9 @@
 const autoBind = require('auto-bind');
 
 class UsersController {
-  constructor({ userService }) {
+  constructor({ userService, tokenManager }) {
     this._service = userService;
+    this._tokenManager = tokenManager;
 
     autoBind(this);
   }
@@ -31,11 +32,25 @@ class UsersController {
 
     await this._service.verifyUserCredential(email, password);
 
+    const token = this._tokenManager.generateToken(email);
+
     res.status(200).json({
       status: 0,
       message: 'Login Sukses',
-      data: null,
-    })
+      data: token,
+    });
+  }
+
+  async getProfileController(req, res) {
+    const data = req.data.payload;
+
+    const profile = await this._service.getProfileByEmail(data);
+
+    res.status(200).json({
+      status: 0,
+      message: 'Sukses',
+      data: profile,
+    });
   }
 }
 

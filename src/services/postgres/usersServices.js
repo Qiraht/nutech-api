@@ -28,14 +28,6 @@ class UsersServices {
     await this._pool.query(query);
   }
 
-  async addLogin() {}
-
-  async getProfile() {}
-
-  async updateProfile() {}
-
-  async updateProfileImage() {}
-
   async verifyNewEmail(email) {
     const query = {
       text: 'SELECT email FROM users WHERE email = $1',
@@ -68,6 +60,18 @@ class UsersServices {
     if (!match) {
       throw new AuthenticationError('Username atau password salah');
     }
+  }
+
+  async getProfileByEmail(email) {
+    const query = {
+      text: `SELECT email, first_name, last_name
+      FROM users WHERE email = $1`,
+      values: [email],
+    };
+
+    const result = await this._pool.query(query);
+
+    return result.rows[0];
   }
 }
 
