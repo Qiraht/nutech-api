@@ -4,6 +4,8 @@ const UsersController = require('./controllers/usersController');
 const { Pool } = require('pg');
 const config = require('./config');
 const TokenManager = require('./utils/tokenManager');
+const InformationsServices = require('./services/postgres/informationServices');
+const InformationsController = require('./controllers/informationsController');
 
 const container = createContainer();
 
@@ -19,9 +21,11 @@ container.register({
 
   // Services
   userService: asClass(UsersServices).singleton(),
+  informationService: asClass(InformationsServices).singleton(),
 
   // Controller
   userController: asClass(UsersController),
+  informationController: asClass(InformationsController),
 });
 
 module.exports = container;
