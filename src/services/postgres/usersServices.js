@@ -89,6 +89,17 @@ class UsersServices {
 
     return result.rows[0];
   }
+
+  async getProfileId(email) {
+    const query = {
+      text: 'SELECT id, email FROM users WHERE email = $1',
+      value: [email],
+    };
+
+    const result = await this._pool.query(query);
+
+    return result.rows[0].id;
+  }
 }
 
 module.exports = UsersServices;
