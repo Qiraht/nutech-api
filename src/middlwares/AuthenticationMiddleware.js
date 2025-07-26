@@ -8,11 +8,9 @@ const authenticationMiddleware = async (req, res, next) => {
   }
   try {
     await TokenManager.verifyToken(token);
-    const data = await TokenManager.decodeToken(token);
+    const user = await TokenManager.decodeToken(token);
 
-    // console.log('verify', test);
-    console.log('decode', data);
-    req.data = data;
+    req.user = user;
     next();
     // eslint-disable-next-line no-unused-vars
   } catch (error) {

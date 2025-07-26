@@ -4,6 +4,7 @@ const validateRequestBody = require('../middlwares/ValidateRequestBody');
 const {
   RegisterPayloadSchema,
   LoginPayloadSchema,
+  EditProfilePayloadSchema,
 } = require('../validator/usersSchema');
 const authenticationMiddleware = require('../middlwares/AuthenticationMiddleware');
 
@@ -33,9 +34,12 @@ router.get(
 );
 
 // put /Profile/Update
-router.put('/profile/update', async (req, res) => {
-  res.json({ message: 'Still In Progress!' });
-});
+router.put(
+  '/profile/update',
+  authenticationMiddleware,
+  validateRequestBody(EditProfilePayloadSchema),
+  userController.putProfileController,
+);
 
 // put /Profile/image
 router.put('/profile/update', async (req, res) => {
