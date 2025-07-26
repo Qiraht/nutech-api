@@ -73,6 +73,22 @@ class UsersServices {
 
     return result.rows[0];
   }
+
+  async editProfileByEmail(email, { first_name, last_name }) {
+    const query = {
+      text: `UPDATE users SET first_name= $1, last_name = $2
+      WHERE email = $3 RETURNING email, first_name, last_name`,
+      values: [first_name, last_name, email],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rowCount) {
+      throw new InvariantError('Gagal memperbarui profile');
+    }
+
+    return result.rows[0];
+  }
 }
 
 module.exports = UsersServices;
