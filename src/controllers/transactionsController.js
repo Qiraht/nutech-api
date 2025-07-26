@@ -22,7 +22,7 @@ class TransactionsController {
     };
 
     async postTopUpController(req, res) {
-        const {user: email } = req.user.payload;
+        const email = req.user.payload;
 
         const { top_up_amount: amount } = req.body;
 
@@ -34,6 +34,16 @@ class TransactionsController {
           data: topup
         });
     }
+
+    async postTransactionController(req, res) {
+        const email = req.user.payload;
+
+        const userId = await this._userService.getProfileByEmail(email);
+
+        const result = await this._service.createTransaction(userId);
+    }
+
+    async getTransactionHistoryController(req, res) {}
 }
 
 module.exports = TransactionsController;
