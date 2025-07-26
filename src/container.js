@@ -3,6 +3,7 @@ const UsersServices = require('./services/postgres/usersServices');
 const UsersController = require('./controllers/usersController');
 const { Pool } = require('pg');
 const config = require('./config');
+const TokenManager = require('./utils/tokenManager');
 
 const container = createContainer();
 
@@ -12,6 +13,9 @@ const pool = new Pool(config.psql);
 container.register({
   // Postgres pool
   pool: asValue(pool),
+
+  // Token Manager
+  tokenManager: asValue(TokenManager),
 
   // Services
   userService: asClass(UsersServices).singleton(),
