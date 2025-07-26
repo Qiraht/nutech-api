@@ -7,7 +7,7 @@ class InformationsController {
         autoBind(this);
     }
 
-    async getBannerContoller(req, res) {
+    async getBannerController(req, res) {
         const result = await this._service.getAllBanners();
 
         res.status(200).json({
@@ -15,6 +15,16 @@ class InformationsController {
             message: 'Sukses',
             data: result,
         })
+    }
+
+    async getServicesController(req, res) {
+        const result = await this._service.getAllServices();
+
+        res.status(200).json({
+          status: 0,
+          message: 'Sukses',
+          data: result,
+        });
     }
 }
 
