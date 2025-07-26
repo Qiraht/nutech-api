@@ -6,6 +6,8 @@ const config = require('./config');
 const TokenManager = require('./utils/tokenManager');
 const InformationsServices = require('./services/postgres/informationServices');
 const InformationsController = require('./controllers/informationsController');
+const TransactionsServices = require('./services/postgres/transactionService');
+const TransactionsController = require('./controllers/transactionsController');
 
 const container = createContainer();
 
@@ -22,10 +24,12 @@ container.register({
   // Services
   userService: asClass(UsersServices).singleton(),
   informationService: asClass(InformationsServices).singleton(),
+  transactionService: asClass(TransactionsServices).singleton(),
 
   // Controller
   userController: asClass(UsersController),
   informationController: asClass(InformationsController),
+  transactionController: asClass(TransactionsController),
 });
 
 module.exports = container;
