@@ -42,9 +42,9 @@ class UsersController {
   }
 
   async getProfileController(req, res) {
-    const data = req.data.payload;
+    const user = req.user.payload;
 
-    const profile = await this._service.getProfileByEmail(data);
+    const profile = await this._service.getProfileByEmail(user);
 
     res.status(200).json({
       status: 0,
