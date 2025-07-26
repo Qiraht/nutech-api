@@ -34,4 +34,19 @@ const LoginPayloadSchema = Joi.object({
   }),
 });
 
-module.exports = { RegisterPayloadSchema, LoginPayloadSchema };
+const EditProfilePayloadSchema = Joi.object({
+  first_name: Joi.string().required().messages({
+    'string.empty': 'Silahkan isi Email',
+    'any.required': 'first name harus diisi',
+  }),
+  last_name: Joi.string().required().required({
+    'string.empty': 'Silahkan isi Email',
+    'any.required': 'last name harus diisi',
+  }),
+});
+
+module.exports = {
+  RegisterPayloadSchema,
+  LoginPayloadSchema,
+  EditProfilePayloadSchema,
+};
