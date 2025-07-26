@@ -52,6 +52,21 @@ class UsersController {
       data: profile,
     });
   }
+
+  async putProfileController(req, res) {
+    const user = req.user.payload;
+    const { first_name, last_name } = req.body;
+
+    await this._service.editProfileByEmail(user, { first_name, last_name });
+
+    const profile = await this._service.getProfileByEmail(user);
+
+    res.status(200).json({
+      status: 0,
+      message: 'Sukses',
+      data: profile,
+    });
+  }
 }
 
 module.exports = UsersController;
