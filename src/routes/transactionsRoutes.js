@@ -16,16 +16,25 @@ router.get(
 );
 
 // post /topup
-router.post('/topup', validateRequestBody(TopUpPayloadSchema), authenticationMiddleware, transactionController.postTopUpController);
+router.post(
+  '/topup',
+  validateRequestBody(TopUpPayloadSchema),
+  authenticationMiddleware,
+  transactionController.postTopUpController,
+);
 
 // post /transatcion
-router.post('/transaction', async (req, res) => {
-  res.json({ message: 'WIP!' });
-});
+router.post(
+  '/transaction',
+  authenticationMiddleware,
+  transactionController.postTransactionController,
+);
 
 // get /transaction/history/
-router.get('/transaction/history', async (req, res) => {
-    res.json({ message: 'WIP!'});
-})
+router.get(
+  '/transaction/history',
+  authenticationMiddleware,
+  transactionController.getTransactionHistoryController,
+);
 
 module.exports = router;

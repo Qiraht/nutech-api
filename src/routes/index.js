@@ -6,7 +6,6 @@ const usersRoutes = require('./usersRoutes');
 const informationsRoutes = require('./informationsRoutes');
 const transactionsRoutes = require('./transactionsRoutes');
 
-
 router.use(usersRoutes);
 router.use(informationsRoutes);
 router.use(transactionsRoutes);
