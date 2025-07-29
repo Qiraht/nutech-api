@@ -22,7 +22,7 @@ exports.up = (pgm) => {
       notNull: true,
     },
     tariff: {
-      type: 'DECIMAL(15,2)',
+      type: 'NUMERIC(15,2)',
       notNull: true,
       default: 0.0,
     },
