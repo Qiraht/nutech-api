@@ -3,7 +3,7 @@ const ClientError = require('../exceptions/ClientError');
 // eslint-disable-next-line no-unused-vars
 const ErrorHandler = (err, req, res, next) => {
   if (err instanceof ClientError) {
-    console.log('Error:', err.name);
+    console.log({ Error: err.name, message: err.message });
     return res.status(err.statusCode).json({
       status: err.errorCode,
       message: err.message,
@@ -13,7 +13,7 @@ const ErrorHandler = (err, req, res, next) => {
 
   return res.status(500).json({
     status: 'error',
-    message: 'Internal server error',
+    message: err.message || 'Internal server error',
     data: null,
   });
 };
