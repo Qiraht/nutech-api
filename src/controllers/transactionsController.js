@@ -23,10 +23,18 @@ class TransactionsController {
 
   async postTopUpController(req, res) {
     const email = req.user.payload;
-
     const { top_up_amount: amount } = req.body;
 
+    const user = await this._userService.getProfileByEmail(email);
     const topup = await this._service.addUserBalance(email, amount);
+    const invoice = await this._service.createTransaction({
+      userId: user.id,
+      service: null,
+      description: null,
+      amount: amount,
+    });
+
+    console.log(invoice);
 
     res.status(200).json({
       status: 0,
@@ -37,15 +45,11 @@ class TransactionsController {
 
   async postTransactionController(req, res) {
     const email = req.user.payload;
-    const { service_code: code } = req.body;
+    const code = req.body.service_code;
 
     const service = await this._informationService.getServiceByCode(code);
     const user = await this._userService.getProfileByEmail(email);
-    await this._service.subtractUserBalance(
-      email,
-      user.balance,
-      service.tariff,
-    );
+    await this._service.subtractUserBalance(email, service.tariff);
 
     const invoice = await this._service.createTransaction({
       userId: user.id,
@@ -54,7 +58,9 @@ class TransactionsController {
       amount: service.tariff,
     });
 
-    const result = await this._service.getTransactionByInvoice(invoice);
+    const result = await this._service.getTransactionByInvoice(
+      invoice.invoice_number,
+    );
 
     res.status(200).json({
       status: 0,
@@ -65,8 +71,8 @@ class TransactionsController {
 
   async getTransactionHistoryController(req, res) {
     const email = req.user.payload;
-    const limit = req.query.limit || 10;
-    const offset = req.query.offset;
+    const limit = req.query.limit || 0;
+    const offset = req.query.offset || 0;
 
     const user = await this._userService.getProfileByEmail(email);
 
