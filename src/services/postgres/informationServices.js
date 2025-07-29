@@ -29,9 +29,8 @@ class InformationsServices {
 
   async getServiceByCode(code) {
     const query = {
-      text: `SELECT * FROM services
-            WHERE service_code = $1`,
-      value: [code],
+      text: `SELECT * FROM services WHERE code = $1`,
+      values: [code],
     };
 
     const result = await this._pool.query(query);

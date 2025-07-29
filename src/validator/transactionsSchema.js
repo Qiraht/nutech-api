@@ -11,4 +11,11 @@ const TopUpPayloadSchema = Joi.object({
   }),
 });
 
-module.exports = { TopUpPayloadSchema };
+const TransactionSchema = Joi.object({
+  service_code: Joi.string().required().messages({
+    'any.required': 'Parameter service_code harus di isi',
+    'string.empty': 'Parameter service_code harus di isi',
+  }),
+});
+
+module.exports = { TopUpPayloadSchema, TransactionSchema };

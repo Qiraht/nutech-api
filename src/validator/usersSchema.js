@@ -10,7 +10,7 @@ const RegisterPayloadSchema = Joi.object({
     'string.empty': 'Silahkan isi Email',
     'any.required': 'first name harus diisi',
   }),
-  last_name: Joi.string().required().required({
+  last_name: Joi.string().required().messages({
     'string.empty': 'Silahkan isi Email',
     'any.required': 'last name harus diisi',
   }),

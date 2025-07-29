@@ -2,7 +2,10 @@ const express = require('express');
 const container = require('../container');
 const authenticationMiddleware = require('../middlwares/AuthenticationMiddleware');
 const validateRequestBody = require('../middlwares/ValidateRequestBody');
-const { TopUpPayloadSchema } = require('../validator/transactionsSchema');
+const {
+  TopUpPayloadSchema,
+  TransactionSchema,
+} = require('../validator/transactionsSchema');
 
 const router = express.Router();
 
@@ -26,6 +29,7 @@ router.post(
 // post /transatcion
 router.post(
   '/transaction',
+  validateRequestBody(TransactionSchema),
   authenticationMiddleware,
   transactionController.postTransactionController,
 );

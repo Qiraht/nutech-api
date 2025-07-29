@@ -35,7 +35,7 @@ exports.up = (pgm) => {
       type: 'TEXT',
     },
     total_amount: {
-      type: 'DECIMAL(15,2)',
+      type: 'NUMERIC(15,2)',
       notNull: true,
       check: 'total_amount >= 0',
     },

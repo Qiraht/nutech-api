@@ -64,7 +64,7 @@ class UsersServices {
 
   async getProfileByEmail(email) {
     const query = {
-      text: `SELECT id, email, first_name, last_name, balance
+      text: `SELECT id, email, first_name, last_name
       FROM users WHERE email = $1`,
       values: [email],
     };
