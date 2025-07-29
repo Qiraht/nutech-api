@@ -8,6 +8,8 @@ const InformationsServices = require('./services/postgres/informationServices');
 const InformationsController = require('./controllers/informationsController');
 const TransactionsServices = require('./services/postgres/transactionService');
 const TransactionsController = require('./controllers/transactionsController');
+const MapServicesToModel = require('./utils/mapServicesToModel');
+const MapBannerToModel = require('./utils/mapBannerToModel');
 
 const container = createContainer();
 
@@ -20,6 +22,10 @@ container.register({
 
   // Token Manager
   tokenManager: asValue(TokenManager),
+
+  // Map
+  mapBannerToModel: asValue(MapBannerToModel),
+  mapServicesToModel: asValue(MapServicesToModel),
 
   // Services
   userService: asClass(UsersServices).singleton(),

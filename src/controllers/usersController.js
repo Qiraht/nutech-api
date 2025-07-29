@@ -49,7 +49,11 @@ class UsersController {
     res.status(200).json({
       status: 0,
       message: 'Sukses',
-      data: profile,
+      data: {
+        email: profile.email,
+        first_name: profile.first_name,
+        last_name: profile.last_name,
+      },
     });
   }
 

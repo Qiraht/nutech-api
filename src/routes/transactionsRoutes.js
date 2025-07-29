@@ -2,7 +2,10 @@ const express = require('express');
 const container = require('../container');
 const authenticationMiddleware = require('../middlwares/AuthenticationMiddleware');
 const validateRequestBody = require('../middlwares/ValidateRequestBody');
-const { TopUpPayloadSchema } = require('../validator/transactionsSchema');
+const {
+  TopUpPayloadSchema,
+  TransactionSchema,
+} = require('../validator/transactionsSchema');
 
 const router = express.Router();
 
@@ -16,16 +19,26 @@ router.get(
 );
 
 // post /topup
-router.post('/topup', validateRequestBody(TopUpPayloadSchema), authenticationMiddleware, transactionController.postTopUpController);
+router.post(
+  '/topup',
+  validateRequestBody(TopUpPayloadSchema),
+  authenticationMiddleware,
+  transactionController.postTopUpController,
+);
 
 // post /transatcion
-router.post('/transaction', async (req, res) => {
-  res.json({ message: 'WIP!' });
-});
+router.post(
+  '/transaction',
+  validateRequestBody(TransactionSchema),
+  authenticationMiddleware,
+  transactionController.postTransactionController,
+);
 
 // get /transaction/history/
-router.get('/transaction/history', async (req, res) => {
-    res.json({ message: 'WIP!'});
-})
+router.get(
+  '/transaction/history',
+  authenticationMiddleware,
+  transactionController.getTransactionHistoryController,
+);
 
 module.exports = router;

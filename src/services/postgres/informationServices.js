@@ -1,29 +1,46 @@
+const InvariantError = require('../../exceptions/InvariantError');
+
 class InformationsServices {
-    constructor({ pool }) {
-        this._pool = pool;
+  constructor({ pool, mapBannerToModel, mapServicesToModel }) {
+    this._pool = pool;
+    this._mapBanner = mapBannerToModel;
+    this._mapService = mapServicesToModel;
+  }
+
+  async getAllBanners() {
+    const query = {
+      text: `SELECT name, image, description
+            FROM banner`,
+    };
+
+    const result = await this._pool.query(query);
+
+    return result.rows.map(this._mapBanner);
+  }
+
+  async getAllServices() {
+    const query = `SELECT code, name, icon, tariff
+            FROM services`;
+
+    const result = await this._pool.query(query);
+
+    return result.rows.map(this._mapService);
+  }
+
+  async getServiceByCode(code) {
+    const query = {
+      text: `SELECT * FROM services WHERE code = $1`,
+      values: [code],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rowCount) {
+      throw new InvariantError('Service ataus Layanan tidak ditemukan');
     }
 
-    async getAllBanners() {
-        const query = {
-            text: `SELECT banner_name, banner_image, description
-            FROM banner`
-        }
-
-        const result = await this._pool.query(query);
-
-        return result.rows;
-    }
-
-    async getAllServices() {
-        const query = {
-          text: `SELECT service_code, service_name, service_icon, service_tariff
-            FROM services`,
-        };
-
-        const result = await this._pool.query(query);
-
-        return result.rows;
-    }
+    return result.rows[0];
+  }
 }
 
 module.exports = InformationsServices;

@@ -64,7 +64,7 @@ class UsersServices {
 
   async getProfileByEmail(email) {
     const query = {
-      text: `SELECT email, first_name, last_name
+      text: `SELECT id, email, first_name, last_name
       FROM users WHERE email = $1`,
       values: [email],
     };
@@ -86,17 +86,6 @@ class UsersServices {
     if (!result.rowCount) {
       throw new InvariantError('Gagal memperbarui profile');
     }
-
-    return result.rows[0];
-  }
-
-  async getProfileIdByEmail(email) {
-    const query = {
-      text: 'SELECT * FROM users WHERE email = $1',
-      value: [email],
-    };
-
-    const result = await this._pool.query(query);
 
     return result.rows[0];
   }
