@@ -7,6 +7,7 @@ const {
   EditProfilePayloadSchema,
 } = require('../validator/usersSchema');
 const authenticationMiddleware = require('../middlwares/AuthenticationMiddleware');
+const upload = require('../middlwares/UploadsMidlleware');
 
 const router = express.Router();
 
@@ -42,8 +43,11 @@ router.put(
 );
 
 // put /Profile/image
-router.put('/profile/update', async (req, res) => {
-  res.json({ message: 'Still In Progress!' });
-});
+router.put(
+  '/profile/image',
+  authenticationMiddleware,
+  upload.single('file'),
+  userController.putProfileImageController,
+);
 
 module.exports = router;
