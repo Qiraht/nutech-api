@@ -25,6 +25,7 @@ exports.up = (pgm) => {
       type: 'NUMERIC(15,2)',
       notNull: true,
       default: 0.0,
+      check: 'balance >= 0',
     },
     created_at: {
       type: 'TIMESTAMPTZ',
