@@ -1,13 +1,13 @@
 const express = require('express');
 const container = require('../container');
-const validateRequestBody = require('../middlwares/ValidateRequestBody');
+const validateRequestBody = require('../middlewares/ValidateRequestBody');
 const {
   RegisterPayloadSchema,
   LoginPayloadSchema,
   EditProfilePayloadSchema,
 } = require('../validator/usersSchema');
-const authenticationMiddleware = require('../middlwares/AuthenticationMiddleware');
-const upload = require('../middlwares/UploadsMidlleware');
+const authenticationMiddleware = require('../middlewares/AuthenticationMiddleware');
+const upload = require('../middlewares/UploadsMidlleware');
 
 const router = express.Router();
 

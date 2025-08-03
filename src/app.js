@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const ErrorHandler = require('./middlwares/ErrorHandler');
+const ErrorHandler = require('./middlewares/ErrorHandler');
 const router = require('./routes');
 const { scopePerRequest } = require('awilix-express');
 const container = require('./container');
