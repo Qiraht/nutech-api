@@ -1,12 +1,13 @@
 const express = require('express');
 const container = require('../container');
-const validateRequestBody = require('../middlwares/ValidateRequestBody');
+const validateRequestBody = require('../middlewares/ValidateRequestBody');
 const {
   RegisterPayloadSchema,
   LoginPayloadSchema,
   EditProfilePayloadSchema,
 } = require('../validator/usersSchema');
-const authenticationMiddleware = require('../middlwares/AuthenticationMiddleware');
+const authenticationMiddleware = require('../middlewares/AuthenticationMiddleware');
+const upload = require('../middlewares/UploadsMidlleware');
 
 const router = express.Router();
 
@@ -42,8 +43,11 @@ router.put(
 );
 
 // put /Profile/image
-router.put('/profile/update', async (req, res) => {
-  res.json({ message: 'Still In Progress!' });
-});
+router.put(
+  '/profile/image',
+  authenticationMiddleware,
+  upload.single('file'),
+  userController.putProfileImageController,
+);
 
 module.exports = router;

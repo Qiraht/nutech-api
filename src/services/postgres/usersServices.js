@@ -64,7 +64,7 @@ class UsersServices {
 
   async getProfileByEmail(email) {
     const query = {
-      text: `SELECT id, email, first_name, last_name
+      text: `SELECT id, email, first_name, last_name, profile_image
       FROM users WHERE email = $1`,
       values: [email],
     };
@@ -85,6 +85,22 @@ class UsersServices {
 
     if (!result.rowCount) {
       throw new InvariantError('Gagal memperbarui profile');
+    }
+
+    return result.rows[0];
+  }
+
+  async editProfilePictureByEmail(email, fileUrl) {
+    const query = {
+      text: `UPDATE users SET profile_image = $1
+      WHERE email = $2 RETURNING profile_image`,
+      values: [fileUrl, email],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rowCount) {
+      throw new InvariantError('Upload image gagal');
     }
 
     return result.rows[0];
