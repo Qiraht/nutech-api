@@ -1,4 +1,5 @@
 const autoBind = require('auto-bind');
+const InvariantError = require('../exceptions/InvariantError');
 
 class UsersController {
   constructor({ userService, tokenManager }) {
@@ -53,6 +54,7 @@ class UsersController {
         email: profile.email,
         first_name: profile.first_name,
         last_name: profile.last_name,
+        profile_image: profile.profile_image,
       },
     });
   }
@@ -69,6 +71,30 @@ class UsersController {
       status: 0,
       message: 'Sukses',
       data: profile,
+    });
+  }
+
+  async putProfileImageController(req, res) {
+    const user = req.user.payload;
+
+    if (!req.file) {
+      throw new InvariantError('Tidak ada file yang diupload');
+    }
+
+    const fileUrl = `/public/uploads/${req.file.filename}`;
+
+    await this._service.editProfilePictureByEmail(user, fileUrl);
+    const profile = await this._service.getProfileByEmail(user);
+
+    res.status(200).json({
+      status: 0,
+      message: 'Sukses',
+      data: {
+        email: profile.email,
+        first_name: profile.first_name,
+        last_name: profile.last_name,
+        profile_image: profile.profile_image,
+      },
     });
   }
 }
