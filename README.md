@@ -3,6 +3,7 @@ A RESTFul API for Indonesian digital products (pulsa, PLN, BPJS, and etc).
 
 This project was developed as part of technical asessment, RESTful API using Node Express and SQL
 
+You can check the app [here!](https://express-digital-payment-api.up.railway.app) (Powered by [Railway](https://railway.com))
 ## Features
 - JWT Authentication
 - Request Validation with [Joi](https://joi.dev)
