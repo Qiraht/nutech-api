@@ -14,17 +14,27 @@ This project was developed as part of technical asessment, RESTful API using Nod
 
 ## Getting Started
 ### Pre-requisites
-- Node.Js 20.19+
-- PostgreSQL 16.8+
+- Node.js 20+
+- PostgreSQL 16+
 
 ### Installation
-``git clone`` <br>
-``cd repo`` <br>
-``npm install``
+```
+git clone https://github.com/Qiraht/express-digital-payment-api
+cd express-digital-payment-api
+npm install
+```
+
+### Setup Database
+1. Create a `.env` file (use `example.env` as template)
+2. Run database migrations with `npm run migrate up`
 
 ### Running the App
 - Development <br>
-``npm run start:dev``
+```
+npm run start:dev
+```
 
 - Production <br>
-``npm run start``
+```
+npm run start
+```
