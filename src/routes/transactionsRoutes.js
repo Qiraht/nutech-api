@@ -1,11 +1,8 @@
 const express = require('express');
 const container = require('../container');
-const {
-  TopUpPayloadSchema,
-  TransactionSchema,
-} = require('../validator/transactionsSchema');
 const authenticationMiddleware = require('../middlewares/AuthenticationMiddleware');
 const validateRequestBody = require('../middlewares/ValidateRequestBody');
+const { TopUpPayloadSchema, TransactionSchema } = require('../validator/schemas');
 
 const router = express.Router();
 
