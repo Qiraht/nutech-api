@@ -1,14 +1,18 @@
 const express = require('express');
 const cors = require('cors');
-const ErrorHandler = require('./middlewares/ErrorHandler');
-const router = require('./routes');
-const { scopePerRequest } = require('awilix-express');
-const container = require('./container');
 const path = require('path');
 
-const app = express();
+const { scopePerRequest } = require('awilix-express');
+const container = require('./container');
 
-const routes = router;
+const ErrorHandler = require('./middlewares/ErrorHandler');
+
+const usersRoutes = require('./routes/usersRoutes');
+const informationsRoutes = require('./routes/informationsRoutes');
+const transactionsRoutes = require('./routes/transactionsRoutes');
+
+
+const app = express();
 
 const corsOption = {
   origin: '*',
@@ -20,8 +24,10 @@ app.use(express.json());
 app.use(scopePerRequest(container));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-// Routes
-app.use(routes);
+// Routes V1
+app.use(usersRoutes);
+app.use(informationsRoutes);
+app.use(transactionsRoutes);
 
 // Middleware
 app.use(ErrorHandler);
