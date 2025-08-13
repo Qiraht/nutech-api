@@ -45,8 +45,6 @@ class TransactionsServices {
     const createdOn = new Date().toISOString();
     const desc = description.toLowerCase();
 
-    console.log(id, invoice, createdOn, desc, description);
-
     const query = {
       text: `INSERT INTO transactions (id, invoice_number, user_id, service_id,
       transaction_type, description, total_amount, created_on)
